@@ -1,0 +1,24 @@
+{
+  "name": "theplumbingproject",
+  "version": "1.0.0",
+  "description": "hello world2",
+  "main": "App.js",
+  "dependencies": {
+    "bootstrap": "^5.2.2",
+    "react-bootstrap": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liu-kevin1/ThePlumbingProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liu-kevin1/ThePlumbingProject/issues"
+  },
+  "homepage": "https://github.com/liu-kevin1/ThePlumbingProject#readme"
+}
