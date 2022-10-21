@@ -1,0 +1,24 @@
+{
+  "name": "theplumbingproject",
+  "version": "1.0.0",
+  "description": "hello world",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"cd backend && npm run start\" \"cd client && yarn start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liu-kevin1/ThePlumbingProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/liu-kevin1/ThePlumbingProject/issues"
+  },
+  "homepage": "https://github.com/liu-kevin1/ThePlumbingProject#readme",
+  "dependencies": {
+    "yarn": "^1.22.19"
+  }
+}
