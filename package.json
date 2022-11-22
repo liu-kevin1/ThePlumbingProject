@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/liu-kevin1/ThePlumbingProject#readme",
   "dependencies": {
+    "concurrently": "^7.6.0",
+    "mysql": "^2.18.1",
     "yarn": "^1.22.19"
   }
 }
