@@ -33,11 +33,54 @@ app.use(cors());
 app.get('/hello', (req, res) => res.send("hello"));
 
 // for MySQL
-app.get('/getSQLData', (req, res) => {
-    console.log("this has ran");
+app.get('/getSQLData/', async (req, res) => {
+    console.log("getSQLData");
+    // console.log(req);
+
+    let additionalSpecifiers = {
+        alumni_id: req.alumniID,
+        first_name: req.firstName,
+        last_name: req.lastName,
+        graduation_year: req.graduationYear,
+        email_address: req.emailAddress,
+        academy_iD: req.academyID
+    }
+    
+    additionalSpecifiers = {
+        alumni_id: 1,
+        first_name: req.firstName,
+        last_name: req.lastName,
+        graduation_year: req.graduationYear,
+        email_address: req.emailAddress,
+        academy_iD: req.academyID
+    }
+
+    let query = "SELECT * FROM Alumni ";
+
+    let first = true;
+
+    for (key in additionalSpecifiers) {
+        let specifier = additionalSpecifiers[key];
+        if (specifier != undefined) {
+            if (first) {
+                first = false;
+                query += "WHERE ";
+            } else {
+                query += "AND ";
+            }
+            query += key + "=" + additionalSpecifiers[key];
+        }
+    }
+
+    console.log("Query: " + query);
+
+    let result = await sqlModule.makeQuery(query)
+    console.log("Result");
+    console.log(result);
+    return res.send(result);
 
     // let testQuery = "SELECT first_name FROM Alumni"
-    let result = sqlModule.getTestData();
+    // let result = sqlModule.getTestData();
 
     // connection.query(function (err, result) {
     //     console.log("connecting...");
@@ -48,14 +91,22 @@ app.get('/getSQLData', (req, res) => {
     //     console.log("connected!");
     // });
 
-    return res.send("yes");
+    // return res.send("yes");
 });
-app.post('/writeSQLData', (req, res) => {
+
+app.get('/createSQLData', (req, res) => {
+    console.log("createSQLData");
+    return;
+})
+
+app.get('/updateSQLData', (req, res) => {
+    console.log("updateSQLData");
     return;
 })
 
 // for Google Sheets
 app.get('/getGSData', (req, res) => {
+    console.log("getGSData");
     let query = 4;
     sheetsModule.querySheets({query: query, sheetID: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"});
 
@@ -74,7 +125,9 @@ app.get('/getGSData', (req, res) => {
     // return res.writeHead(301, { "Location": authorizationUrl });;
     return res.send("Finished");
 });
-app.post('/writeGSData', (req, res) => {
+
+app.get('/writeGSData', (req, res) => {
+    console.log("writeGSData");
     return;
 })
 

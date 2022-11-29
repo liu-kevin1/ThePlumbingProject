@@ -41,4 +41,14 @@ async function getTestData() {
     });
 }
 
-module.exports = { createConnection, getTestData };
+async function makeQuery(query) {
+    let con = await createConnection();
+    return con.query(query, function (err, result, fields) {
+        if (err) {
+            return console.error("Error: " + err.message);
+        }
+        console.log("here");
+    });
+}
+
+module.exports = { createConnection, getTestData, makeQuery };

@@ -29,13 +29,6 @@ async function querySheets({ query, sheetID }) {
     console.log(response.data.values);
 
     return response;
-
-    return {
-        props: {
-            title,
-            content
-        }
-    }
 }
 
 // export default function Post({ title, content }) {

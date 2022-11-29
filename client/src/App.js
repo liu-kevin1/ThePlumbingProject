@@ -10,9 +10,10 @@ import LogoutButton from './LogoutButton';
 
 
 function App() {
-  const {user, isAuthenticated} = useAuth0();
+  // const {user, isAuthenticated} = useAuth0();
+  const [isAuthenticated, setAuthentication] = useState(true);
   console.log(isAuthenticated)
-  const [alumniID, setAlumniID] = useState(-1);
+  const [alumniID, setAlumniID] = useState(1);
   const [firstName, setFirstName] = useState("Kevin");
   const [lastName, setLastName] = useState("Liu");
   const [graduationYear, setGraduationYear] = useState("2023");
@@ -38,12 +39,13 @@ function App() {
 //     console.log(res);
 //   }, []);
   const submitReadRequest = () => {
-    const data = this.getPackedData();
+    const data = getPackedData();
     console.log(data);
-    axios.post("http://localhost:5000/getSQLData", data).then(res => console.log(res));
+    // axios.post("http://127.0.0.0:5000/getSQLData/", {data}).then(res => console.log(res));
+    axios.post("//localhost:5000/getSQLData/", data).then(res => console.log(res));
   };
 
-  // submitUpdateRequest = useCallback(async () => {
+  // submitUpdateRequest = useCallback(async () = > {
   //   const data = this.getPackedData();
   //   console.log(data);
   //   const res = await axios.post("http://localhost:5000/updateSQLData", data);
@@ -51,7 +53,7 @@ function App() {
   // }, []);
 
   const submitUpdateRequest = () => {
-    const data = this.getPackedData();
+    const data = getPackedData();
     console.log(data);
     axios.post("http://localhost:5000/updateSQLData", data).then(res => console.log(res));
   }
@@ -64,7 +66,7 @@ function App() {
   // }, []);
 
   const submitCreateRequest = () =>{
-    const data = this.getPackedData();
+    const data = getPackedData();
     console.log(data);
     axios.post("http://localhost:5000/createSQLData", data).then(res => console.log(res));
   };
@@ -116,7 +118,7 @@ function App() {
 
         <Form.Group className="mb-3" controlId="formGridAlumniID">
           <Form.Label value={alumniID} onChange={handleAlumniIDChange}>Alumni ID: </Form.Label>
-          <Form.Control />
+          <Form.Control placeholder="1"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridFirstName">
