@@ -47,8 +47,8 @@ function App() {
     const data = getPackedData();
     // console.log(data);
     axios.get("http://localhost:5000/getSQLData", data).then(res => {
-      console.log(res.data)
-      setOutput(res.data)
+      console.log(res.data[0])
+      setOutput(JSON.stringify(res.data[0]))
     }).catch((err) => {
       if (err.response) {
         console.log(err.response)
