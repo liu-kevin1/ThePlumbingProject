@@ -11,15 +11,19 @@ import LogoutButton from './LogoutButton';
 
 function App() {
   const {user, isLoading, isAuthenticated} = useAuth0();
-  console.log(isLoading)
-  console.log(isAuthenticated)
-  const [alumniID, setAlumniID] = useState(1);
-  const [firstName, setFirstName] = useState("Kevin");
-  const [lastName, setLastName] = useState("Liu");
-  const [graduationYear, setGraduationYear] = useState("2023");
-  const [emailAddress, setEmailAddress] = useState("kevliu@bergen.org");
-  const [academyID, setAcademyID] = useState(1);
-  
+  // console.log(isLoading)
+  // console.log(isAuthenticated)
+  const [alumniID, setAlumniID] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [graduationYear, setGraduationYear] = useState();
+  const [emailAddress, setEmailAddress] = useState();
+  const [academyID, setAcademyID] = useState();
+  const [output, setOutput] = useState()
+  // axios.get("http://localhost:5000/hello").then(res => console.log(res))
+
+  const componentDidMount = () =>{
+  }
 
   const getPackedData = () =>{
     return {
@@ -39,10 +43,18 @@ function App() {
 //     console.log(res);
 //   }, []);
   const submitReadRequest = () => {
+    // axios.get("http://localhost:5000/hello").then(res => console.log(res))
     const data = getPackedData();
-    console.log(data);
-    // axios.post("http://127.0.0.0:5000/getSQLData/", {data}).then(res => console.log(res));
-    axios.post("http://localhost:5000/getSQLData/", data).then(res => console.log(res));
+    // console.log(data);
+    axios.get("http://localhost:5000/getSQLData", data).then(res => {
+    console.log(res.data)  
+    setOutput(res.data)
+    }).catch((err)=>{
+      if(err.response){
+        console.log(err.response)
+      }
+    }
+    );
   };
 
   // submitUpdateRequest = useCallback(async () = > {
@@ -121,38 +133,38 @@ function App() {
         <p> Hello {user.name}!</p>
       <LogoutButton />
         <Form.Group className="mb-3" controlId="formGridAlumniID">
-          <Form.Label value={alumniID} onChange={handleAlumniIDChange}>Alumni ID: </Form.Label>
-          <Form.Control placeholder="1"/>
+          <Form.Label>Alumni ID: </Form.Label>
+          <Form.Control onChange={handleAlumniIDChange} value={alumniID} placeholder="1"/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridFirstName">
-          <Form.Label value={firstName} onChange={handleFirstNameChange}>First Name: </Form.Label>
-          <Form.Control placeholder="Kevin" />
+          <Form.Label>First Name: </Form.Label>
+          <Form.Control value={firstName} onChange={handleFirstNameChange} placeholder="Kevin" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridLastName">
-          <Form.Label value={lastName} onChange={handleLastNameChange}>Last Name: </Form.Label>
-          <Form.Control placeholder="Liu" />
+          <Form.Label>Last Name: </Form.Label>
+          <Form.Control value={lastName} onChange={handleLastNameChange} placeholder="Liu" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridGraduationYear">
-          <Form.Label value={graduationYear} onChange={handleGraduationYearChange}>Graduation Year: </Form.Label>
-          <Form.Control placeholder="2023" />
+          <Form.Label>Graduation Year: </Form.Label>
+          <Form.Control value={graduationYear} onChange={handleGraduationYearChange} placeholder="2023" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridEmailAddress">
-          <Form.Label value={emailAddress} onChange={handleEmailAddressChange}>Email Address: </Form.Label>
-          <Form.Control placeholder="example@gmail.com" />
+          <Form.Label>Email Address: </Form.Label>
+          <Form.Control value={emailAddress} onChange={handleEmailAddressChange} placeholder="example@gmail.com" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formGridAcademyID">
-          <Form.Label value={academyID} onChange={handleAcademyIDChange}>Academy ID: </Form.Label>
-          <Form.Control />
+          <Form.Label >Academy ID: </Form.Label>
+          <Form.Control value={academyID} onChange={handleAcademyIDChange} />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="exampleForm.ControlTextArea1">
           <Form.Label>Output:</Form.Label>
-          <Form.Control as="textarea" rows={3} />
+          <Form.Control value={output} as="textarea" rows={3} disabled/>
         </Form.Group>
 
         <Button variant="read" type="submit" onClick={submitReadRequest}>Read</Button>{' '}

@@ -10,6 +10,7 @@ const app = express();
 const port = 5000;
 
 app.use(cors());
+app.use(express.json())
 
 // const config = {
 //     authRequired: false,
@@ -33,9 +34,9 @@ app.use(cors());
 app.get('/hello', (req, res) => res.send("hello"));
 
 // for MySQL
-app.get('/getSQLData/', async (req, res) => {
+app.get('/getSQLData', async (req, res) => {
     console.log("getSQLData");
-    // console.log(req);
+    console.log(req);
 
     let additionalSpecifiers = {
         alumni_id: req.alumniID,
@@ -77,7 +78,7 @@ app.get('/getSQLData/', async (req, res) => {
     let result = await sqlModule.makeQuery(query)
     console.log("Result");
     console.log(result);
-    return res.send(result);
+    res.send(result);
 
     // let testQuery = "SELECT first_name FROM Alumni"
     // let result = sqlModule.getTestData();
