@@ -78,21 +78,7 @@ app.get('/getSQLData', async (req, res) => {
     let result = await sqlModule.makeQuery(query);
     console.log("Result");
     console.log(result);
-    res.send("yes");
-
-    // let testQuery = "SELECT first_name FROM Alumni"
-    // let result = sqlModule.getTestData();
-
-    // connection.query(function (err, result) {
-    //     console.log("connecting...");
-    //     console.log(result);
-    //     if (err) {
-    //         throw err;
-    //     }
-    //     console.log("connected!");
-    // });
-
-    // return res.send("yes");
+    res.send(result);
 });
 
 app.get('/createSQLData', (req, res) => {

@@ -47,17 +47,21 @@ async function getTestData() {
 async function makeQuery(query) {
     let con = await createConnection();
 
-    con.query(query, function (err, result, fields) {
-        if (err) {
-            return console.error("Error: " + err.message);
-        }
-        console.log("Actual Result");
-        console.log(result);
-        return result;
+    const resultPromise = new Promise((resolve, reject) => {
+        con.query(query, function (err, result, fields) {
+            if (err) {
+                return console.error("Error: " + err.message);
+            }
+            console.log("Actual Result");
+            console.log(result);
+            resolve(result);
+        });
     });
 
+    return resultPromise;
+
     // return con.query(query);
-    
+
     // , function (err, result, fields) {
     //     if (err) {
     //         return console.error("Error: " + err.message);
