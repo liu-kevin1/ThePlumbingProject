@@ -24,6 +24,7 @@
     "google-auth-library": "^8.7.0",
     "googleapis": "^105.0.0",
     "mysql": "^2.18.1",
+    "react-bootstrap": "^2.6.0",
     "yarn": "^1.22.19"
   }
 }
