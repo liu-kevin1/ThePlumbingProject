@@ -75,10 +75,10 @@ app.get('/getSQLData', async (req, res) => {
 
     console.log("Query: " + query);
 
-    let result = await sqlModule.makeQuery(query)
+    let result = await sqlModule.makeQuery(query);
     console.log("Result");
     console.log(result);
-    res.send(result);
+    res.send("yes");
 
     // let testQuery = "SELECT first_name FROM Alumni"
     // let result = sqlModule.getTestData();

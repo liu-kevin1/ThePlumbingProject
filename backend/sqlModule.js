@@ -26,29 +26,47 @@ async function createConnection() {
         console.log('Connected to the MySQL server.');
     });
 
-    return con;
+    return await con;
 }
 
 async function getTestData() {
     let con = await createConnection();
+    console.log("Connection:");
+    console.log(con);
     let parameters = "SELECT * FROM Alumni";
 
     con.query(parameters, function (err, result, fields) {
         if (err) {
             return console.error("Error: " + err.message);
         }
+        return result;
         console.log(result);
     });
 }
 
 async function makeQuery(query) {
     let con = await createConnection();
-    return con.query(query, function (err, result, fields) {
+
+    con.query(query, function (err, result, fields) {
         if (err) {
             return console.error("Error: " + err.message);
         }
-        console.log("here");
+        console.log("Actual Result");
+        console.log(result);
+        return result;
     });
+
+    // return con.query(query);
+    
+    // , function (err, result, fields) {
+    //     if (err) {
+    //         return console.error("Error: " + err.message);
+    //     }
+    //     console.log("here");
+    //     console.log(result);
+    //     return result;
+    // });
+    // return "yes";
 }
 
 module.exports = { createConnection, getTestData, makeQuery };
