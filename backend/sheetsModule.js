@@ -48,10 +48,8 @@ async function updateSheets({ query, sheetID }) {
 
     const client = await auth.getClient();
 
-    const sheets = await google.sheets({ version: 'v4', auth }, sheetID);
-
-    // const sheets = getSheets(sheetID);
-
+    const sheets = google.sheets({ version: 'v4', auth }, sheetID);
+    
     let values = [
         [
             "Test1", "Test2", "Test3"
@@ -73,6 +71,7 @@ async function updateSheets({ query, sheetID }) {
             spreadsheetId: sheetID,
             range: range,
             resource: resource,
+            valueInputOption: "RAW"
         });
         console.log('%d cells updated.', result.data.updatedCells);
         return result;
@@ -83,6 +82,8 @@ async function updateSheets({ query, sheetID }) {
 
     console.log("Response:");
     console.log(response.data.values);
+
+    
 }
 
 // export default function Post({ title, content }) {
