@@ -3,6 +3,7 @@ const sqlModule = require('./sqlModule');
 
 const express = require('express');
 const cors = require('cors');
+const { auth, requiresAuth } = require('express-openid-connect');
 const fs = require('fs');
 
 const app = express();
@@ -10,7 +11,25 @@ const port = 5000;
 
 app.use(cors());
 
-app.get('/', (req, res) => res.send("Home"));
+// const config = {
+//     authRequired: false,
+//     auth0Logout: true,
+//     baseURL: 'http://localhost:3000',
+//     clientID: 'hljLjyws5AJTCoNyZxFtG9F4HqS53e6P',
+//     issuerBaseURL: 'https://localhost:3000',
+//     secret: 'njNz7vkd3CfPDfKCPqGccO4EKccSgkJSiPZA01buHVMld8Ou8HZG9FZ1S5-4lGGE'
+//   };
+  
+// // The `auth` router attaches /login, /logout
+// // and /callback routes to the baseURL
+// app.use(auth(config));
+  
+// // req.oidc.isAuthenticated is provided from the auth router
+// app.get('/', (req, res) => {
+//     res.send(
+//       req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
+//     )
+// });
 app.get('/hello', (req, res) => res.send("hello"));
 
 // for MySQL
