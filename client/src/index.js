@@ -11,9 +11,11 @@ root.render(
   //   <App />
   // </React.StrictMode>
   <Auth0Provider
+  // audience="https://dev-bh0d0r0nk8n1svw.us.auth0.com"
+  cacheLocation="localstorage"
   domain= "dev-bh0d0r0nk8n1svwf.us.auth0.com"
   clientId= "hljLjyws5AJTCoNyZxFtG9F4HqS53e6P"
-  redirectUri="http://localhost:3000/"
+  redirectUri="http://localhost:3000"
 >
   <App />
 </Auth0Provider>,
