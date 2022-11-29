@@ -10,8 +10,8 @@ import LogoutButton from './LogoutButton';
 
 
 function App() {
-  // const {user, isAuthenticated} = useAuth0();
-  const [isAuthenticated, setAuthentication] = useState(true);
+  const {user, isLoading, isAuthenticated} = useAuth0();
+  console.log(isLoading)
   console.log(isAuthenticated)
   const [alumniID, setAlumniID] = useState(1);
   const [firstName, setFirstName] = useState("Kevin");
@@ -108,14 +108,18 @@ function App() {
     return (
     <div className="App">
       {!isAuthenticated ? 
-      (<LoginButton />):
+      (<div> 
+        <LoginButton />
+      </div>
+      ):
       (
       <header className="App-header">
         {/* <img src={logo} className="App-logo" alt="logo" />
         <p>
           {this.state.message}
         </p>  */}
-
+        <p> Hello {user.name}!</p>
+      <LogoutButton />
         <Form.Group className="mb-3" controlId="formGridAlumniID">
           <Form.Label value={alumniID} onChange={handleAlumniIDChange}>Alumni ID: </Form.Label>
           <Form.Control placeholder="1"/>
