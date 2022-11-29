@@ -36,7 +36,6 @@ app.get('/hello', (req, res) => res.send("hello"));
 // for MySQL
 app.get('/getSQLData', async (req, res) => {
     console.log("getSQLData");
-    console.log(req);
 
     let additionalSpecifiers = {
         alumni_id: req.alumniID,
@@ -44,16 +43,7 @@ app.get('/getSQLData', async (req, res) => {
         last_name: req.lastName,
         graduation_year: req.graduationYear,
         email_address: req.emailAddress,
-        academy_iD: req.academyID
-    }
-    
-    additionalSpecifiers = {
-        alumni_id: 1,
-        first_name: req.firstName,
-        last_name: req.lastName,
-        graduation_year: req.graduationYear,
-        email_address: req.emailAddress,
-        academy_iD: req.academyID
+        academy_id: req.academyID
     }
 
     let query = "SELECT * FROM Alumni ";
@@ -73,48 +63,118 @@ app.get('/getSQLData', async (req, res) => {
         }
     }
 
-    console.log("Query: " + query);
     let result = await sqlModule.makeQuery(query);
-    console.log("Result");
-    console.log(result);
     res.send(result);
 });
 
-app.get('/createSQLData', (req, res) => {
+app.get('/createSQLData', async (req, res) => {
     console.log("createSQLData");
-    return;
+    let additionalSpecifiers = {
+        first_name: req.firstName,
+        last_name: req.lastName,
+        graduation_year: req.graduationYear,
+        email_address: req.emailAddress,
+        academy_id: req.academyID
+    }
+
+    additionalSpecifiers = {
+        first_name: "Johnny",
+        last_name: "Doe",
+        graduation_year: "1987",
+        email_address: "jd@gmail.com",
+        academy_id: 4
+    }
+
+    let query = "INSERT INTO Alumni (";
+
+    let first = true;
+    for (key in additionalSpecifiers) {
+        let specifier = additionalSpecifiers[key];
+        if (specifier != undefined) {
+            if (first) {
+                first = false;
+            } else {
+                query += ", ";
+            }
+            query += key
+        }
+    }
+    query += ") VALUES (";
+
+    first = true;
+
+    for (key in additionalSpecifiers) {
+        let specifier = additionalSpecifiers[key];
+        if (specifier != undefined) {
+            if (first) {
+                first = false;
+            } else {
+                query += ", ";
+            }
+            query += '"' + additionalSpecifiers[key] + '"';
+        }
+    }
+
+    query += ");";
+
+    let result = await sqlModule.makeQuery(query);
+    res.send(result);
 })
 
-app.get('/updateSQLData', (req, res) => {
+app.get('/updateSQLData', async (req, res) => {
     console.log("updateSQLData");
-    return;
+
+    let additionalSpecifiers = {
+        first_name: req.firstName,
+        last_name: req.lastName,
+        graduation_year: req.graduationYear,
+        email_address: req.emailAddress,
+        academy_id: req.academyID
+    }
+
+    additionalSpecifiers = {
+        first_name: "Johnny2",
+        last_name: "Doe2",
+        graduation_year: "19872",
+        email_address: "jd@gmail.com2",
+        academy_id: 4
+    }
+
+    let query = "UPDATE Alumni ";
+
+    let first = true;
+
+    for (key in additionalSpecifiers) {
+        let specifier = additionalSpecifiers[key];
+        if (specifier != undefined) {
+            if (first) {
+                first = false;
+                query += "SET ";
+            } else {
+                query += ", ";
+            }
+            query += key + "=" + '"' + additionalSpecifiers[key] + '"';
+        }
+    }
+
+    query += " WHERE alumni_id=" + 0;
+
+    let result = await sqlModule.makeQuery(query);
+    res.send(result);
 })
 
 // for Google Sheets
 app.get('/getGSData', (req, res) => {
     console.log("getGSData");
     let query = 4;
-    sheetsModule.querySheets({query: query, sheetID: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"});
-
-    // return;
-    
-    // let result = sheetsModule.authorize().then(sheetsModule.listMajors).catch(console.error);
-    // console.log("Result: " + result);
-    // let id = "1NquMNhaDF4reH17FBJzfS6Tfkvv6WFjid4u8TlYiGrM";
-    // let title = "Test Title 1";
-    // let find = "FindMe";
-    // let replacement = "Replaced";
-    // let result = databaseConnections.batchUpdate(id, title, find, replacement);
-    // console.log("Finished sheets API call");
-    // console.log("Result: " + result);
-    // let authorizationUrl = "https://localhost:8000/getGSDataFinished";
-    // return res.writeHead(301, { "Location": authorizationUrl });;
+    sheetsModule.readSheets({query: query, sheetID: "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ"});
     return res.send("Finished");
 });
 
 app.get('/writeGSData', (req, res) => {
     console.log("writeGSData");
-    return;
+    sheetsModule.updateSheets({query: "dummy", sheetID: "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ"});
+    return res.send("Finished writing");
 })
 
 app.listen(port, () => {

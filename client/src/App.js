@@ -36,16 +36,8 @@ function App() {
     }
   }
 
-  //  submitReadRequest = useCallback(async () => {
-  //     const data = this.getPackedData();
-  //     console.log(data);
-  //     const res = await axios.post("http://localhost:5000/getSQLData", data);
-  //     console.log(res);
-  //   }, []);
   const submitReadRequest = () => {
-    // axios.get("http://localhost:5000/hello").then(res => console.log(res))
     const data = getPackedData();
-    // console.log(data);
     axios.get("http://localhost:5000/getSQLData", data).then(res => {
       console.log(res.data[0])
       setOutput(JSON.stringify(res.data[0]))
@@ -66,21 +58,28 @@ function App() {
 
   const submitUpdateRequest = () => {
     const data = getPackedData();
-    console.log(data);
-    axios.post("http://localhost:5000/updateSQLData", data).then(res => console.log(res));
+    axios.get("http://localhost:5000/updateSQLData", data).then(res => {
+      console.log(res.data[0])
+      setOutput(JSON.stringify(res.data[0]))
+    }).catch((err) => {
+      if (err.response) {
+        console.log(err.response)
+      }
+    }
+    );
   }
-
-  // submitCreateRequest = useCallback(async () => {
-  //   const data = this.getPackedData();
-  //   console.log(data);
-  //   const res = await axios.post("http://localhost:5000/createSQLData", data);
-  //   console.log(res);
-  // }, []);
 
   const submitCreateRequest = () => {
     const data = getPackedData();
-    console.log(data);
-    axios.post("http://localhost:5000/createSQLData", data).then(res => console.log(res));
+    axios.get("http://localhost:5000/createSQLData", data).then(res => {
+      console.log(res.data[0])
+      setOutput(JSON.stringify(res.data[0]))
+    }).catch((err) => {
+      if (err.response) {
+        console.log(err.response)
+      }
+    }
+    );
   };
 
   // // formGridAlumniID

@@ -47,6 +47,7 @@ async function getTestData() {
 async function makeQuery(query) {
     let con = await createConnection();
 
+    console.log(query);
     const resultPromise = new Promise((resolve, reject) => {
         con.query(query, function (err, result, fields) {
             if (err) {
