@@ -40,7 +40,7 @@ function App() {
     const data = getPackedData();
     axios.get("http://localhost:5000/getSQLData", data).then(res => {
       console.log(res.data[0])
-      setOutput(JSON.stringify(res.data[0]))
+      setOutput(JSON.stringify(res.data[res.data.length-1]))
     }).catch((err) => {
       if (err.response) {
         console.log(err.response)
@@ -58,10 +58,7 @@ function App() {
 
   const submitUpdateRequest = () => {
     const data = getPackedData();
-    axios.get("http://localhost:5000/updateSQLData", data).then(res => {
-      console.log(res.data[0])
-      setOutput(JSON.stringify(res.data[0]))
-    }).catch((err) => {
+    axios.get("http://localhost:5000/updateSQLData", {params:data}).then(res=>console.log(res)).catch((err) => {
       if (err.response) {
         console.log(err.response)
       }
@@ -71,10 +68,8 @@ function App() {
 
   const submitCreateRequest = () => {
     const data = getPackedData();
-    axios.get("http://localhost:5000/createSQLData", data).then(res => {
-      console.log(res.data[0])
-      setOutput(JSON.stringify(res.data[0]))
-    }).catch((err) => {
+    console.log(data)
+    axios.get("http://localhost:5000/createSQLData", {params:data}).then(res=>console.log(res)).catch((err) => {
       if (err.response) {
         console.log(err.response)
       }

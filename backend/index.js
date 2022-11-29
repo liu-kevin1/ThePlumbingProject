@@ -68,22 +68,25 @@ app.get('/getSQLData', async (req, res) => {
 });
 
 app.get('/createSQLData', async (req, res) => {
+    // console.log(req)
     console.log("createSQLData");
     let additionalSpecifiers = {
-        first_name: req.firstName,
-        last_name: req.lastName,
-        graduation_year: req.graduationYear,
-        email_address: req.emailAddress,
-        academy_id: req.academyID
+        alumni_id: req.query.alumniID,
+        first_name: req.query.firstName,
+        last_name: req.query.lastName,
+        graduation_year: req.query.graduationYear,
+        email_address: req.query.emailAddress,
+        academy_id: req.query.academyID
     }
 
-    additionalSpecifiers = {
-        first_name: "Johnny",
-        last_name: "Doe",
-        graduation_year: "1987",
-        email_address: "jd@gmail.com",
-        academy_id: 4
-    }
+    // additionalSpecifiers = {
+    //     first_name: "Johnny",
+    //     last_name: "Doe",
+    //     graduation_year: "1987",
+    //     email_address: "jd@gmail.com",
+    //     academy_id: 4
+    // }
+    // console.log(additionalSpecifiers);
 
     let query = "INSERT INTO Alumni (";
 
@@ -125,21 +128,22 @@ app.get('/updateSQLData', async (req, res) => {
     console.log("updateSQLData");
 
     let additionalSpecifiers = {
-        first_name: req.firstName,
-        last_name: req.lastName,
-        graduation_year: req.graduationYear,
-        email_address: req.emailAddress,
-        academy_id: req.academyID
+        first_name: req.query.firstName,
+        last_name: req.query.lastName,
+        graduation_year: req.query.graduationYear,
+        email_address: req.query.emailAddress,
+        academy_id: req.query.academyID
     }
 
-    additionalSpecifiers = {
-        first_name: "Johnny2",
-        last_name: "Doe2",
-        graduation_year: "19872",
-        email_address: "jd@gmail.com2",
-        academy_id: 4
-    }
-
+    // additionalSpecifiers = {
+    //     first_name: "Johnny2",
+    //     last_name: "Doe2",
+    //     graduation_year: "19872",
+    //     email_address: "jd@gmail.com2",
+    //     academy_id: 4
+    // }
+    console.log(additionalSpecifiers);
+    
     let query = "UPDATE Alumni ";
 
     let first = true;
@@ -157,7 +161,7 @@ app.get('/updateSQLData', async (req, res) => {
         }
     }
 
-    query += " WHERE alumni_id=" + 0;
+    query += " WHERE alumni_id=" + req.query.alumniID;
 
     let result = await sqlModule.makeQuery(query);
     res.send(result);
