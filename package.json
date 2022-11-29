@@ -19,7 +19,10 @@
   },
   "homepage": "https://github.com/liu-kevin1/ThePlumbingProject#readme",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "concurrently": "^7.6.0",
+    "google-auth-library": "^8.7.0",
+    "googleapis": "^105.0.0",
     "mysql": "^2.18.1",
     "yarn": "^1.22.19"
   }
