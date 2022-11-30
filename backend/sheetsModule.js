@@ -1,8 +1,10 @@
 const { GoogleAuth } = require('google-auth-library');
 const { google, ValueInputOption, MajorDimension } = require('googleapis');
 
+const sheetID = "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ";
+
 // Get the authenticated Google Sheets object
-async function getSheets(sheetID) {
+async function getSheets() {
     const auth = new GoogleAuth({
         scopes: 'https://www.googleapis.com/auth/spreadsheets',
         keyFile: './credentials/google_service_credentials.json'
@@ -10,28 +12,27 @@ async function getSheets(sheetID) {
 
     const client = await auth.getClient();
 
-    return google.sheets({ version: 'v4', auth }, sheetID);
+    return google.sheets({ version: 'v4', auth });
 }
 
 // Return the values within <range>
-async function readSheets({ range, sheetID }) {
-    const sheets = getSheets(sheetID);
+async function readSheets({ range }) {
+    const sheets = await getSheets();
 
-    console.log("ID: " + sheetID);
-    const response = await sheets.spreadsheets.values.get({
+    const response = sheets.spreadsheets.values.get({
         spreadsheetId: sheetID,
         range: range,
     });
 
-    console.log("Response:");
-    console.log(response.data.values);
+    // console.log("Response:");
+    // console.log(response.data.values);
 
     return response;
 }
 
 // Replace the values within <range> with <values>
-async function updateSheets({ values, range, sheetID }) {
-    const sheets = getSheets(sheetID);
+async function updateSheets({ values, range }) {
+    const sheets = await getSheets(sheetID);
     
     // let values = [
     //     [

@@ -30,7 +30,7 @@ async function createConnection() {
 }
 
 // Send a query to the SQL database
-async function makeQuery(query) {
+async function makeQuery({query: query}) {
     let con = await createConnection();
 
     console.log(query);
@@ -39,8 +39,8 @@ async function makeQuery(query) {
             if (err) {
                 return console.error("Error: " + err.message);
             }
-            console.log("Actual Result");
-            console.log(result);
+            // console.log("Actual Result");
+            // console.log(result);
             resolve(result);
         });
     });
@@ -48,10 +48,4 @@ async function makeQuery(query) {
     return resultPromise;
 }
 
-// Get the last alumni_id from the database
-async function getLastAlumniID() {
-    let query = "SELECT max(alumni_id) FROM Alumni";
-    return await makeQuery(query);
-}
-
-module.exports = { createConnection, getTestData, makeQuery };
+module.exports = { createConnection, makeQuery };
