@@ -5,8 +5,8 @@ const process = require('process');
 const CREDENTIALS_PATH = path.join(process.cwd() + '/credentials/sql_credentials.json');
 
 var mysql = require('mysql');
-const { create } = require('domain');
 
+// Create a connection to the SQL database
 async function createConnection() {
     const content = await fs.readFile(CREDENTIALS_PATH);
     const keys = JSON.parse(content);
@@ -29,22 +29,8 @@ async function createConnection() {
     return await con;
 }
 
-async function getTestData() {
-    let con = await createConnection();
-    console.log("Connection:");
-    console.log(con);
-    let parameters = "SELECT * FROM Alumni";
-
-    con.query(parameters, function (err, result, fields) {
-        if (err) {
-            return console.error("Error: " + err.message);
-        }
-        return result;
-        console.log(result);
-    });
-}
-
-async function makeQuery(query) {
+// Send a query to the SQL database
+async function makeQuery({query: query}) {
     let con = await createConnection();
 
     console.log(query);
@@ -53,25 +39,13 @@ async function makeQuery(query) {
             if (err) {
                 return console.error("Error: " + err.message);
             }
-            console.log("Actual Result");
-            console.log(result);
+            // console.log("Actual Result");
+            // console.log(result);
             resolve(result);
         });
     });
 
     return resultPromise;
-
-    // return con.query(query);
-
-    // , function (err, result, fields) {
-    //     if (err) {
-    //         return console.error("Error: " + err.message);
-    //     }
-    //     console.log("here");
-    //     console.log(result);
-    //     return result;
-    // });
-    // return "yes";
 }
 
-module.exports = { createConnection, getTestData, makeQuery };
+module.exports = { createConnection, makeQuery };

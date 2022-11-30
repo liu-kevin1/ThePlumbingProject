@@ -1,5 +1,6 @@
 const sheetsModule = require('./sheetsModule');
 const sqlModule = require('./sqlModule');
+const databaseSync = require('./databaseSync');
 
 const express = require('express');
 const cors = require('cors');
@@ -12,25 +13,6 @@ const port = 5000;
 app.use(cors());
 app.use(express.json())
 
-// const config = {
-//     authRequired: false,
-//     auth0Logout: true,
-//     baseURL: 'http://localhost:3000',
-//     clientID: 'hljLjyws5AJTCoNyZxFtG9F4HqS53e6P',
-//     issuerBaseURL: 'https://localhost:3000',
-//     secret: 'njNz7vkd3CfPDfKCPqGccO4EKccSgkJSiPZA01buHVMld8Ou8HZG9FZ1S5-4lGGE'
-//   };
-  
-// // The `auth` router attaches /login, /logout
-// // and /callback routes to the baseURL
-// app.use(auth(config));
-  
-// // req.oidc.isAuthenticated is provided from the auth router
-// app.get('/', (req, res) => {
-//     res.send(
-//       req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out'
-//     )
-// });
 app.get('/hello', (req, res) => res.send("hello"));
 
 // for MySQL
@@ -63,7 +45,7 @@ app.get('/getSQLData', async (req, res) => {
         }
     }
 
-    let result = await sqlModule.makeQuery(query);
+    let result = await sqlModule.makeQuery({query: query});
     res.send(result);
 });
 
@@ -78,15 +60,6 @@ app.get('/createSQLData', async (req, res) => {
         email_address: req.query.emailAddress,
         academy_id: req.query.academyID
     }
-
-    // additionalSpecifiers = {
-    //     first_name: "Johnny",
-    //     last_name: "Doe",
-    //     graduation_year: "1987",
-    //     email_address: "jd@gmail.com",
-    //     academy_id: 4
-    // }
-    // console.log(additionalSpecifiers);
 
     let query = "INSERT INTO Alumni (";
 
@@ -120,7 +93,7 @@ app.get('/createSQLData', async (req, res) => {
 
     query += ");";
 
-    let result = await sqlModule.makeQuery(query);
+    let result = await sqlModule.makeQuery({query: query});
     res.send(result);
 })
 
@@ -163,24 +136,26 @@ app.get('/updateSQLData', async (req, res) => {
 
     query += " WHERE alumni_id=" + req.query.alumniID;
 
-    let result = await sqlModule.makeQuery(query);
+    let result = await sqlModule.makeQuery({query: query});
     res.send(result);
 })
 
 // for Google Sheets
 app.get('/getGSData', (req, res) => {
     console.log("getGSData");
-    let query = 4;
-    sheetsModule.readSheets({query: query, sheetID: "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ"});
+    let range = "A1:C5";
+    sheetsModule.readSheets({range: range});
     return res.send("Finished");
 });
 
 app.get('/writeGSData', (req, res) => {
     console.log("writeGSData");
-    sheetsModule.updateSheets({query: "dummy", sheetID: "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ"});
+    sheetsModule.updateSheets({query: "dummy"});
     return res.send("Finished writing");
 })
 
 app.listen(port, () => {
     console.log(`Listening to port ${port}!`)
 })
+
+databaseSync.sync();
