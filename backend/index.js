@@ -166,8 +166,8 @@ app.get('/updateSQLData', async (req, res) => {
 // for Google Sheets
 app.get('/getGSData', (req, res) => {
     console.log("getGSData");
-    let query = 4;
-    sheetsModule.readSheets({query: query, sheetID: "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ"});
+    let range = "A1:C5";
+    sheetsModule.readSheets({range: range, sheetID: "1oOohmDEw3R2AU8aHwt9-KWGpFCQSYz08HsGgcXQEDLQ"});
     return res.send("Finished");
 });
 
