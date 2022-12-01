@@ -36,10 +36,11 @@ async function sync() {
 
     if (lastSqlID == lastSheetsID) {
         // All good! (for now)
+        console.log("No need for a sync - all good!");
         return;
     } else if (lastSqlID < lastSheetsID) {
         // Read the rows that the SQL database doesn't have
-        let range = "A" + (lastSqlID+4) + ":F" + (lastSheetsID+3);
+        let range = "A" + (lastSqlID+3) + ":F" + (lastSheetsID+2);
         let result = await sheetsModule.readSheets({range: range});
         let values = result.data.values;
 
