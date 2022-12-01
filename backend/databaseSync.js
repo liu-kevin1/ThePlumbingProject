@@ -5,7 +5,8 @@ async function sync() {
     let lastSqlID = await getLastSqlAlumniID();
     let lastSheetsID = await getLastSheetsAlumniID();
     console.log("lastSqlID: ");
-    lastSqlID = parseInt(lastSqlID[0]['max(alumni_id)'], 10);
+    // We add 1 because it starts with 0, and max() returns the largest value
+    lastSqlID = parseInt(lastSqlID[0]['max(alumni_id)'], 10) + 1;
     console.log(lastSqlID);
 
     console.log("lastSheetsID: ");
@@ -32,26 +33,19 @@ async function sync() {
         "email_address",
         "academy_id"
     ]
-    let sql_columns_to_index = {
-        "alumni_id": 0,
-        "first_name": 1,
-        "last_name": 2,
-        "graduation_year": 3,
-        "email_address": 4,
-        "academy_id": 5
-    }
 
     if (lastSqlID == lastSheetsID) {
         // All good! (for now)
         return;
     } else if (lastSqlID < lastSheetsID) {
         // Read the rows that the SQL database doesn't have
-        let range = "A" + (lastSqlID+4) + ":F" + lastSheetsID+3;
+        let range = "A" + (lastSqlID+4) + ":F" + (lastSheetsID+3);
         let result = await sheetsModule.readSheets({range: range});
         let values = result.data.values;
 
         console.log("Sheets Data:");
         console.log(values);
+        console.log(result);
 
         // INSERT INTO table_name (column_list)
         // VALUES

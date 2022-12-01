@@ -8,7 +8,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 
-
 function App() {
   const { user, isLoading, isAuthenticated } = useAuth0();
   // console.log(isLoading)
@@ -49,13 +48,6 @@ function App() {
     );
   };
 
-  // submitUpdateRequest = useCallback(async () = > {
-  //   const data = this.getPackedData();
-  //   console.log(data);
-  //   const res = await axios.post("http://localhost:5000/updateSQLData", data);
-  //   console.log(res);
-  // }, []);
-
   const submitUpdateRequest = () => {
     const data = getPackedData();
     axios.get("http://localhost:5000/updateSQLData", {params:data}).then(res=>console.log(res)).catch((err) => {
@@ -76,6 +68,15 @@ function App() {
     }
     );
   };
+
+  const submitSyncRequest = () => {
+    axios.get("http://localhost:5000/syncData", {}).then(res=>console.log(res)).catch((err) => {
+      if (err.response) {
+        console.log(err.response)
+      }
+    }
+    );
+  }
 
   // // formGridAlumniID
   // // formGridFirstName
@@ -164,6 +165,7 @@ function App() {
             <Button variant="read" type="submit" onClick={submitReadRequest}>Read</Button>{' '}
             <Button variant="update" type="submit" onClick={submitUpdateRequest}>Update</Button>{' '}
             <Button variant="create" type="submit" onClick={submitCreateRequest}>Create</Button>{' '}
+            <Button variant="sync" type="submit" onClick={submitSyncRequest}>Sync</Button>{' '}
           </header>)}
 
     </div>

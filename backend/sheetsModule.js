@@ -19,21 +19,22 @@ async function getSheets() {
 async function readSheets({ range }) {
     const sheets = await getSheets();
 
-    const response = sheets.spreadsheets.values.get({
-        spreadsheetId: sheetID,
-        range: range,
-    });
-
-    // console.log("Response:");
-    // console.log(response.data.values);
-
-    return response;
+    try {
+        const response = await sheets.spreadsheets.values.get({
+            spreadsheetId: sheetID,
+            range: range,
+        });
+        return response;
+    } catch (err) {
+        // TODO (Developer) - Handle exception
+        throw err;
+    }
 }
 
 // Replace the values within <range> with <values>
 async function updateSheets({ values, range }) {
     const sheets = await getSheets(sheetID);
-    
+
     // let values = [
     //     [
     //         "Test1", "Test2", "Test3"

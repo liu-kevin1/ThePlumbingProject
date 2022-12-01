@@ -145,7 +145,7 @@ app.get('/getGSData', (req, res) => {
     console.log("getGSData");
     let range = "A1:C5";
     sheetsModule.readSheets({range: range});
-    return res.send("Finished");
+    return res.send("Finished reading");
 });
 
 app.get('/writeGSData', (req, res) => {
@@ -158,4 +158,7 @@ app.listen(port, () => {
     console.log(`Listening to port ${port}!`)
 })
 
-databaseSync.sync();
+app.get('/syncData', (req, res) => {
+    databaseSync.sync();
+    return res.send("Finished syncing");
+})
