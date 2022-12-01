@@ -118,12 +118,13 @@ async function sync() {
     }
 }
 
-// Get the last alumni_id from the database
+// Get the last alumni_id from the SQL database
 async function getLastSqlAlumniID() {
     let query = "SELECT max(alumni_id) FROM Alumni";
     return await sqlModule.makeQuery({query: query});
 }
 
+// Get the last Alumni ID from the Google Sheets database
 async function getLastSheetsAlumniID() {
     let range = "A2";
     return await sheetsModule.readSheets({range: range});
