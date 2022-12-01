@@ -32,14 +32,6 @@ async function sync() {
         "email_address",
         "academy_id"
     ]
-    let sql_columns_to_index = {
-        "alumni_id": 0,
-        "first_name": 1,
-        "last_name": 2,
-        "graduation_year": 3,
-        "email_address": 4,
-        "academy_id": 5
-    }
 
     if (lastSqlID == lastSheetsID) {
         // All good! (for now)
@@ -123,12 +115,13 @@ async function sync() {
     }
 }
 
-// Get the last alumni_id from the database
+// Get the last alumni_id from the SQL database
 async function getLastSqlAlumniID() {
     let query = "SELECT max(alumni_id) FROM Alumni";
     return await sqlModule.makeQuery({query: query});
 }
 
+// Get the last Alumni ID from the Google Sheets database
 async function getLastSheetsAlumniID() {
     let range = "A2";
     return await sheetsModule.readSheets({range: range});
